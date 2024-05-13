@@ -8,8 +8,8 @@ DROP TABLE IF EXISTS Department;
 
 -- Create Department table
 CREATE TABLE Department (
-    dept_no VARCHAR NOT NULL,
-    dept_name VARCHAR NOT NULL,
+    dept_no VARCHAR(10) NOT NULL,
+    dept_name VARCHAR(50) NOT NULL,
     PRIMARY KEY (dept_no)
 );
 
@@ -19,8 +19,8 @@ SELECT * FROM Department;
 
 -- Create Titles table
 CREATE TABLE Titles (
-    title_id VARCHAR NOT NULL,
-    title VARCHAR NOT NULL,
+    title_id VARCHAR(10) NOT NULL,
+    title VARCHAR(50) NOT NULL,
     PRIMARY KEY (title_id)
 );
 
@@ -31,11 +31,11 @@ SELECT * FROM Titles;
 -- Create Employees table
 CREATE TABLE Employees (
     emp_no INT NOT NULL,
-    emp_title_id VARCHAR NOT NULL,
+    emp_title_id VARCHAR(20) NOT NULL,
     birth_date DATE NOT NULL,
-    first_name VARCHAR NOT NULL,
-    last_name VARCHAR NOT NULL,
-    sex VARCHAR NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    sex VARCHAR(1) NOT NULL,
     hire_date DATE NOT NULL,
     FOREIGN KEY (emp_title_id) REFERENCES Titles(title_id),
     PRIMARY KEY (emp_no)
@@ -48,9 +48,10 @@ SELECT * FROM Employees;
 -- Create Dept_Emp table
 CREATE TABLE Dept_Emp (
     emp_no INT NOT NULL,
-    dept_no VARCHAR NOT NULL,
+    dept_no VARCHAR(10) NOT NULL,
     FOREIGN KEY (emp_no) REFERENCES Employees(emp_no),
-    FOREIGN KEY (dept_no) REFERENCES Department(dept_no)
+    FOREIGN KEY (dept_no) REFERENCES Department(dept_no),
+	PRIMARY KEY (emp_no, dept_no)
 );
 
 -- Verify Dept_Emp table
@@ -59,10 +60,11 @@ SELECT * FROM Dept_Emp;
 
 -- Create Dept_Manager table
 CREATE TABLE Dept_Manager (
-    dept_no VARCHAR NOT NULL,
+    dept_no VARCHAR(10) NOT NULL,
     emp_no INT NOT NULL,
     FOREIGN KEY (dept_no) REFERENCES Department(dept_no),
-    FOREIGN KEY (emp_no) REFERENCES Employees(emp_no)
+    FOREIGN KEY (emp_no) REFERENCES Employees(emp_no),
+	PRIMARY KEY (dept_no, emp_no)
 );
 
 -- Verify Dept_Manager table
@@ -73,7 +75,8 @@ SELECT * FROM Dept_Manager;
 CREATE TABLE Salaries (
     emp_no INT NOT NULL,
     salary INT NOT NULL,
-    FOREIGN KEY (emp_no) REFERENCES Employees(emp_no)
+    FOREIGN KEY (emp_no) REFERENCES Employees(emp_no),
+	PRIMARY KEY (emp_no)
 );
 
 -- Verify Salaries table
